@@ -16,6 +16,7 @@ use App\Containers\User\UI\API\Transformers\UserPrivateProfileTransformer;
 use App\Containers\User\UI\API\Transformers\UserTransformer;
 use App\Ship\Parents\Controllers\ApiController;
 use App\Ship\Transporters\DataTransporter;
+use App\Containers\User\Services\UserService;
 
 /**
  * Class Controller.
@@ -24,6 +25,19 @@ use App\Ship\Transporters\DataTransporter;
  */
 class Controller extends ApiController
 {
+
+    /**
+     * @var UserService $service
+     */
+    private $service;
+
+    /**
+     * @param UserService $service
+     */
+    public function __construct(UserService $service)
+    {
+        $this->service = $service;
+    }
 
     /**
      * @param \App\Containers\User\UI\API\Requests\RegisterUserRequest $request

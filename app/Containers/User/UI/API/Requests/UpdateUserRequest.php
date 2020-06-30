@@ -42,16 +42,43 @@ class UpdateUserRequest extends Request
     ];
 
     /**
-     * @return  array
+     * @return array
      */
-    public function rules()
+    public function rules(): array
     {
+        $userId = Auth::user()->id ?? 0;
+
         return [
-            'email'    => 'email|unique:users,email',
-            'id'       => 'required|exists:users,id',
-            'password' => 'min:6|max:40',
-            'name'     => 'min:2|max:50',
+            'first_name' => ['sometimes', 'required', 'string', 'max:64'],
+            'middle_name' => ['string', 'max:64'],
+            'last_name' => ['sometimes', 'required', 'string', 'max:64'],
+            'gender' => ['string', 'max:16'],
+            'birthdate' => ['date'],
+            'email' => ['sometimes', 'required', 'string', 'email', 'max:64', "unique:users,email,{$userId}"],
+            'business_email' => ['sometimes', 'required', 'string', 'email', 'max:64', "unique:users,business_email,{$userId}"],
+            'phone' => ['string', 'max:16'],
+            'mobile' => ['string', 'max:16'],
+            'business_phone' => ['string', 'max:16'],
+            'business_phone_extension' => ['string', 'max:16'],
+            'business_mobile' => ['string', 'max:16'],
+            'toll_free_business_number' => ['string', 'max:64'],
+            'address' => ['string', 'max:16'],
+            'city' => ['string', 'max:64'],
+            'state' => ['string', 'max:64'],
+            'country' => ['string', 'max:2'],
+            'zip_code' => ['string', 'max:16'],
+            'password' => ['string', 'max:64'],
+            'secret_phrase' => ['string', 'max:25'],
+            'fingerprint_code' => ['string', 'max:25'],
         ];
+    }
+
+    /**
+     * @return array
+     */
+    public function messages(): array
+    {
+        return [];
     }
 
     /**
